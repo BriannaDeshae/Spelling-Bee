@@ -1,0 +1,31 @@
+def get_word(letters, required_letter, used_words):  #define function
+  while True:                                        #while loop(will always be true)
+    word= input("Enter your word:\n")        
+
+    if word== "END" or is_valid_word(word, letters, required_letter, used_words):
+      return word
+def get_point_value(word,letters):   
+  points = len(word)                # this point system is going to assume the word is valid
+  if is_pangram(word,letters):         # if word is pangram add points
+    print(word,"- Pangram!\n")
+    return points + 7
+  else:
+    print(word)
+    return points
+
+def spelling_bee():
+  letters_input = input("Welcome to Spelling Bee! Enter your 7 letters, separated by commas: ")
+  letters = [letter.strip() for letter in letters_input.split(",")]  #  strip from each letter
+  score = 0        #initial score
+  used_words = []
+  required_letter = input(f"Which of these 7 letters {letters} will be your required letter? ")
+  while required_letter not in letters:    # if letter requiring not in original 7 letters
+    print(f"{required_letter} is not an available letter. Please choose from the following:{letters}")
+    required_letter = input(f"Which of these 7 letters {letters} will be your required letter? ")
+  while True:    # while code is running basically
+    used_words.append(get_word(letters, required_letter, used_words))    #were going to call the get_word functions which checks for everything
+    if used_words[-1]== "END":    #if the word equals end DO NOT add points for this word
+      break      
+    score += get_point_value(used_words[-1], letters)
+  print ("Your final score is", score)     # at the end print the final score
+spelling_bee()  # DO NOT REMOVE
